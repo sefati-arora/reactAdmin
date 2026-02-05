@@ -1,12 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Bell, UserCog2 } from "lucide-react";
 import {useAuth} from "../context/authProvider";
+import useApi from "../components/useApi";
+import ApiEndPoint from "../components/ApiEndPoint";
 import Swal from "sweetalert2";
 import "./NavBar.css";
 function NavBar() {
   const{logout}=useAuth();
+  const {postData}=useApi();
   const navigate = useNavigate();
-  const handleLogout = async() => {
+  const handleLogout = async(id) => {
     console.log("handleLogout fired"); 
    const result= await Swal.fire({
       title: "Are you sure?",
@@ -19,8 +22,37 @@ function NavBar() {
     });
      if (!result.isConfirmed) return;
      console.log("Confirmed logout");
-      logout();
-      navigate('/')
+     console.log(id)
+     try
+     {
+        const response=await postData(ApiEndPoint.logOut,{id})
+         console.log(response)
+     if(response.status == 200)
+     {
+      Swal.fire({
+        icon:"success",
+        text:"SUCCESSFULL!"
+      })
+           logout();
+           navigate('/')
+     }
+     else
+     {
+      Swal.fire({
+        icon:"error",
+        title:"ERROR",
+        text:"error"
+      })
+     }
+     }
+     catch(error)
+     {
+      Swal.fire({
+        icon:"error",
+        title:"ERROR",
+        text:" SERVER ERROR"
+      })
+     }
   };
   return (
     <>
@@ -41,7 +73,7 @@ function NavBar() {
               }
             }}
           >
-            <option>SELETCT</option>
+            <option value="">SELECT</option>
             <option value="logout">Logout</option>
             <option>Password Change</option>
             <option>Setting</option>

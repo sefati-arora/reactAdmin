@@ -4,6 +4,7 @@ const ApiEndPoint=
 {
      baseUrl:`${API_BASE_URL}`,
      adminLogin:`${API_BASE_URL}/api/adminLogin`,
-     otpVerify:`${API_BASE_URL}/api/otpVerify`
+     otpVerify:`${API_BASE_URL}/api/otpVerify`,
+     logOut:`${API_BASE_URL}/api/logOut`
 }
 export default ApiEndPoint;
