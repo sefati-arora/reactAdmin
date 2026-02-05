@@ -10,7 +10,7 @@ function NavBar() {
   const {postData}=useApi();
   const navigate = useNavigate();
   const handleLogout = async(id) => {
-    console.log("handleLogout fired"); 
+    console.log("handleLogout"); 
    const result= await Swal.fire({
       title: "Are you sure?",
       text: "You will be logged out!",
